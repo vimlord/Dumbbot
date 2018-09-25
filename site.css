@@ -1,0 +1,73 @@
+
+body {
+    text-align: center;
+    margin: auto;
+    background-color: white;
+    /* width: 60%; */
+}
+
+h1 {
+    color: #55f;
+    font-size: 3em
+}
+
+a:link, a:visited {
+    color: #33B;
+}
+
+a:hover {
+    color: #BB3;
+}
+
+a:active {
+    background-color: black;
+    color: white;
+}
+
+form {
+    border: none;
+    margin: auto;
+    padding: 16px;
+    text-align: center;
+}
+
+p {
+    font-size: 12px;
+}
+
+footer p {
+    font-size: 8px;
+}
+
+#chatbox, form {
+    width: 320px;
+    margin: auto;
+}
+
+#input {
+    width: 100%;
+}
+
+.output-text {
+    color: #0863bb;
+    font-weight: bold;
+    text-align: left;
+}
+
+.input-text {
+    text-align: left;
+}
+
+.button {
+    background-color: #aaf;
+    color: #44f;
+    
+    margin: 2px;
+    padding: 3px 12px;
+    border: none;
+
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+

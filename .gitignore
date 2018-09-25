@@ -1,0 +1,13 @@
+# Ignore the modules directory
+node_modules
+__pycache__
+
+# Model generated using model.py
+*.h5
+
+# Pickle files used for storing the preprocessed dataset
+*.pkl
+
+# The charset used by the model. Used to map characters to embeddings
+charset.txt
+

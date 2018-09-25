@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dumbbot</title>
+        <link rel="stylesheet" href="/public/site.css">
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://localhost:8080');
+
+            function appendChat(type, text) {
+                // Generate the node
+                let elem = document.createElement("p");
+                elem.className = type;
+                elem.appendChild(document.createTextNode(text));
+                
+                // Add to the document
+                document.getElementById("chatbox").appendChild(elem);
+            }
+
+            socket.on('output', function (data) {
+                console.log('dumbbot: ' + data.output);
+                
+                appendChat("output-text", data.output);
+            });
+            
+            function submitForm() {
+                const x = document.getElementById('input').value;
+                console.log('user: ' + x);
+
+                appendChat("input-text", x);
+                
+                // Send the message
+                socket.emit('input', {input: x});
+                
+                document.getElementsByName("chat")[0].reset();
+            }
+
+        </script>
+    </head>
+    <body>
+        <h1>Dumbbot</h1>
+        <main>
+            <div id="chatbox">
+            </div>
+            <form name="chat" onsubmit="submitForm(); return false;" autocomplete="off">
+                <input type="text" id="input" name="mssg">
+                <br /><br />
+                <input type="submit" class="button">
+            </form>
+        </main>
+        <footer>
+          <p style="color: red">BEWARE - Dumbbot is very dumb, and could say equally dumb things. Use with caution.</p>
+          <p style="color: green">NOTE - No robots were harmed in the creation of this application.</p>
+          <p>Created by Christopher Hittner. Powered by Socket IO and Tensorflow. Inspired by <a href="cleverbot.com">Cleverbot</a>.</p>
+        </footer>
+    </body>
+</html>

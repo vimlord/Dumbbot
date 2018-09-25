@@ -1,0 +1,16 @@
+{
+  "name": "cs-546-lab-7",
+  "version": "1.0.0",
+  "description": "I pledge my honor that I have abided by the Stevens Honor System.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node test.js"
+  },
+  "author": "Christopher Hittner (10408122)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.1.1"
+  }
+}
