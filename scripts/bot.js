@@ -1,7 +1,7 @@
 
 const path = require('path')
 
-async function genText(x, fn) {
+function genText(x, fn) {
     var spawn = require("child_process").spawn;
     let proc = spawn('python3', ['model/model.py', '-m', 'model.h5', '-i', x])
 

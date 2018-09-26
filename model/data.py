@@ -20,8 +20,8 @@ def strip_movie_line(line):
     lineId = line[:i]
     line = line[i+1:]
     
-    for _ in range(7):
-        line = line[line.index(' ')+1:]
+    for _ in range(4):
+        line = line[line.index('+++$+++')+8:]
 
     line = ''.join(c for c in line if ord(c) < 128)
 
@@ -33,10 +33,33 @@ def strip_movie_conv(line):
 
     res = eval(line)
     return list(map(lambda x: int(x[1:]), res))
-    
+
 line_corpus = None
 convs = None
 char_corpus = None
+
+def pull_movie_convs(conv):
+    global line_corpus
+    
+    bkts = []
+
+    i = 0
+    while i < len(conv):
+        if conv[i] not in line_corpus:
+            i += 1
+            continue
+
+        j = i+1
+        while j < len(conv) and conv[j] in line_corpus:
+            j += 1
+
+        if j - i >= 2:
+            bkts.append(conv[i:j])
+
+        i = j
+
+    return bkts
+
 
 def load_dataset():
     global line_corpus
@@ -69,7 +92,7 @@ def process_dataset():
     print('Found', len(lines), 'movie lines')
     
     # Filter the lines
-    lines = list(filter(lambda x: len(x['text']) < 120, lines))
+    lines = list(filter(lambda x: len(x['text']) < 160, lines))
     print('Trimmed to', len(lines), 'movie lines')
     
     print('Building corpuses')
@@ -107,8 +130,9 @@ def process_dataset():
     print('Found', len(convs), 'conversations')
 
     # Filter for the valid conversations
-    convs = list(filter(lambda c: all(x in line_corpus for x in c), convs))
-    print('Trimmed to', len(convs), 'conversations')
+    #convs = list(filter(lambda c: all(x in line_corpus for x in c), convs))
+    convs = list(reduce(lambda x,y:x+y, map(pull_movie_convs, convs), []))
+    print('Reduced to', len(convs), 'conversations')
 
     print('Saving conversation mappings')
     with open(os.path.join(datapath, 'convs.pkl'), 'wb') as f:

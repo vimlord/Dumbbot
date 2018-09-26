@@ -15,7 +15,7 @@ parser.add_argument('-t', '--train', help='performs training', default=0, type=i
 parser.add_argument('--sampletext', help='sample input for progress samples', default='Hello there.', type=str)
 parser.add_argument('--reset', help='deletes the model before doing anything', action='store_true')
 
-def train(model, epochs=1, batches=1024, sample_input='Hello there.'):
+def train(model, epochs=1, batches=256, sample_input='Hello there.'):
     global model_name
     
     charset = data.get_char_corpus()
