@@ -42,6 +42,9 @@ def reset(name='model.h5'):
 
 def respond_to(model, x, max_len=100):
     charset = data.get_char_corpus()
+    
+    # Trim non-ASCII chars
+    x = ''.join(c for c in x if c not in charset)
 
     pt = data.str_to_arr(x)
     s = ''
