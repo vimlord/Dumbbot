@@ -4,6 +4,7 @@
         <title>Dumbbot</title>
         <link rel="stylesheet" href="/public/site.css">
         <script src="/socket.io/socket.io.js"></script>
+        <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
         <script>
             var socket = io.connect('http://localhost:8080');
 
@@ -18,20 +19,27 @@
             }
 
             socket.on('output', function (data) {
-                console.log('dumbbot: ' + data.output);
-                
                 appendChat("output-text", data.output);
+
+                if (tts) {
+                  responsiveVoice.speak(data.output);
+                }
             });
+
+            var tts = false;
+
+            function toggleTTS() {
+                tts = !tts;
+                document.getElementsByClassName("button-tts")[0].value = tts ? "Disable TTS" : "Enable TTS";
+            }
             
             function submitForm() {
                 const x = document.getElementById('input').value;
-                console.log('user: ' + x);
-
                 appendChat("input-text", x);
                 
                 // Send the message
                 socket.emit('input', {input: x});
-                
+                  
                 document.getElementsByName("chat")[0].reset();
             }
 
@@ -45,7 +53,8 @@
             <form name="chat" onsubmit="submitForm(); return false;" autocomplete="off">
                 <input type="text" id="input" name="mssg">
                 <br /><br />
-                <input type="submit" class="button">
+                <input type="submit" class="button" />
+                <input type="button" class="button button-tts" value="Enable TTS" onclick="toggleTTS();"/>
             </form>
         </main>
         <footer>
